@@ -8,6 +8,7 @@ const isAndroid = Platform.OS === 'android';
 const styles = StyleSheet.create({
   notification: {
     position: 'absolute',
+    paddingVertical: 10,
     width,
   },
 });
@@ -87,7 +88,7 @@ class Notification extends Component {
       <Animated.View
         style={[
           styles.notification,
-          { top: indent },
+          { top: isAndroid ? indent - 20 : indent },
           { height, backgroundColor: backgroundColour },
           {
             transform: [{
@@ -97,7 +98,7 @@ class Notification extends Component {
               }),
             }],
           },
-          this.props.style,
+          style,
         ]}
       >
         <NotificationBody
