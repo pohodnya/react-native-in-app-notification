@@ -7,6 +7,7 @@ module.exports = {
     ],
     "rules": {
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "react/forbid-prop-types": [0],
       // These two are turned off due to peerDependencies not being read by ESLint
       "import/no-unresolved": 0,
       "import/extensions": 0,

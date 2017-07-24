@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Animated, StyleSheet, Platform } from 'react-native';
+import { Animated, StyleSheet, Platform, StatusBar } from 'react-native';
 import DefaultNotificationBody from './DefaultNotificationBody';
 
 const isAndroid = Platform.OS === 'android';
@@ -63,6 +63,7 @@ class Notification extends Component {
   }
 
   showNotification(done = () => {}) {
+    StatusBar.setHidden(true, 'slide');
     Animated.timing(this.state.animatedValue, {
       toValue: 1,
       duration: this.props.openCloseDuration,
@@ -70,6 +71,7 @@ class Notification extends Component {
   }
 
   closeNotification(done = () => {}) {
+    StatusBar.setHidden(false, 'slide');
     Animated.timing(this.state.animatedValue, {
       toValue: 0,
       duration: this.props.openCloseDuration,
@@ -77,13 +79,15 @@ class Notification extends Component {
   }
 
   render() {
-    const { height, backgroundColour, notificationBodyComponent: NotificationBody } = this.props;
+    const { height, backgroundColour, indent, style } = this.props;
+    const { notificationBodyComponent: NotificationBody } = this.props;
     const { animatedValue, title, message, onPress } = this.state;
 
     return (
       <Animated.View
         style={[
           styles.notification,
+          { top: indent },
           { height, backgroundColor: backgroundColour },
           {
             transform: [{
@@ -93,6 +97,7 @@ class Notification extends Component {
               }),
             }],
           },
+          this.props.style,
         ]}
       >
         <NotificationBody
@@ -111,6 +116,8 @@ Notification.propTypes = {
   openCloseDuration: PropTypes.number,
   height: PropTypes.number,
   backgroundColour: PropTypes.string,
+  indent: PropTypes.number,
+  style: PropTypes.object,
   notificationBodyComponent: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.func,
@@ -122,6 +129,8 @@ Notification.defaultProps = {
   openCloseDuration: 200,
   height: 80,
   backgroundColour: 'white',
+  indent: 0,
+  style: {},
   notificationBodyComponent: DefaultNotificationBody,
 };
 
