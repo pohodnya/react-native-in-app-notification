@@ -1,14 +1,14 @@
 import React, { PropTypes, Component } from 'react';
-import { Animated, StyleSheet, Platform, StatusBar } from 'react-native';
+import { Animated, StyleSheet, Platform, StatusBar, Dimensions } from 'react-native';
 import DefaultNotificationBody from './DefaultNotificationBody';
 
+const { width } = Dimensions.get('window');
 const isAndroid = Platform.OS === 'android';
 
 const styles = StyleSheet.create({
   notification: {
     position: 'absolute',
-    paddingTop: isAndroid ? 0 : 20,
-    width: '100%',
+    width,
   },
 });
 
